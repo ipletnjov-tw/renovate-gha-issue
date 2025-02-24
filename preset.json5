@@ -58,11 +58,6 @@
         "regex"
       ],
       "pinDigests": false
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["pin", "pinDigest"],
-      "enabled": false
     }
   ],
   replacement: {
