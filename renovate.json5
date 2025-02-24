@@ -1,7 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "github>ipletnjov-tw/renovate-gha-issue:preset.json5"
+    "github>ipletnjov-tw/renovate-gha-issue:preset.json5",
+    "github>ipletnjov-tw/renovate-gha-issue:preset2.json5"
   ],
   "packageRules": []
 }
