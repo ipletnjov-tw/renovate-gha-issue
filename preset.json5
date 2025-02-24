@@ -1,1 +1,69 @@
-{}
+{
+  // JSON schema for IDE auto-completion and as a quick documentation reference.
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    // This includes the recommended configuration settings by the maintainers of Renovate.
+    "config:best-practices",
+    // This enables automatic rebasing of stale Pull Requests.
+    ":rebaseStalePrs",
+    // This tells Renovate to always raise a PR before attempting an automerge.
+    ":automergePr",
+    // This tells Renovate to require all status checks to pass before attempting to automerge.
+    ":automergeRequireAllStatusChecks",
+    // This shows the age, adoption and passing-tests % for every dependency in a pull request.
+    "mergeConfidence:all-badges"
+  ],
+  // This needs to be ignored to prevent Renovate from grouping updates into many separate PRs instead of one.
+  "ignorePresets": [
+    "group:recommended"
+  ],
+  // Noise reduction: Renovate will not auto-update PRs outside the configured schedule.
+  "updateNotScheduled": false,
+  // The following labels are auto-applied to all PRs by default.
+  "labels": [
+    "dependencies"
+  ],
+  // Noise reduction: Renovate will not auto-update PRs outside the schedule when the "renovate-stop-updating" label is present.
+  "stopUpdatingLabel": "renovate-stop-updating",
+  // Noise reduction: Limit the number of concurrently active PRs.
+  // Concurrency-limited PRs can still be opted into via the Dependency Dashboard.
+  "prConcurrentLimit": 3,
+  "packageRules": [
+    {
+      // This groups *all* updates into a single pull request.
+      // This is almost equivalent to the group:all preset but without setting groupName and groupSlug at the root level,
+      // as this causes the all-grouping to be non-overridable.
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "groupName": "all dependencies",
+      "groupSlug": "all",
+      "separateMajorMinor": true,
+      // Establish a base minimum release age of 30 days for all dependencies.
+      "minimumReleaseAge": "30 days",
+      "enabled": true
+    },
+    // This will create a separate PR to pin Docker and NPM digests.
+    {
+      "matchUpdateTypes": [
+        "pin",
+        "pinDigest"
+      ],
+      "groupSlug": "pin-dependencies",
+      "enabled": true
+    },
+    // Bug: Attempting to pin digests via a regex custom manager rule results in a branch update failure.
+    {
+      "matchManagers": [
+        "regex"
+      ],
+      "pinDigests": false
+    }
+  ],
+  replacement: {
+    // Omit the default text that Renovate adds to the body of each PR that performs a version replacement.
+    // See https://docs.renovatebot.com/configuration-options/#replacement for the default text.
+    prBodyNotes: null
+  }
+}
+
